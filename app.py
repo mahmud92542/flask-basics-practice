@@ -104,7 +104,27 @@ class Item(Resource):
         items = list(filter(lambda x:x['name'] != name, items))
         return {'message': 'Item deleted'}
 
+    
+    def put(self,name):
+        # data = request.get_json()
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            "price",
+            type=float,
+            required=True,
+            help="This field can't be left blank!"
+        )
+        data = parser.parse_args()
 
+        item = next(filter(lambda x:x['name'] == name, items),None)
+        if item in None:
+            item = {
+                'name':name,
+                'price':data['price']
+            }
+        else:
+            item.update(date)
+        return item
 
 
 
